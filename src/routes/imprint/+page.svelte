@@ -1,5 +1,20 @@
 <script>
 	import { A, P, Heading, Table, TableBody, TableBodyCell, TableBodyRow } from "flowbite-svelte";
+
+	const clubContact = {
+		address: "KLJB Kläham-Oberergoldsbach e.V.<br/>Raiffeisenstraße 6<br/>84061 Ergoldsbach",
+		mail: "info@kljb-klaeham.de",
+		cellPhone: "0170 811 81 96"
+	};
+	const personContacts = [
+		{ name: "Florian Sedlmeier", address: "Hauptstraße 29<br/>84098 Hohenthann", gender: "m" },
+		{ name: "Kilian Prosch", address: "Unkofen 34<br/>84098 Hohenthann", gender: "m" },
+		{
+			name: "Lea Eichmeier",
+			address: "Ludwig-Stiegler-Straße 1<br/>84061 Ergoldsbach",
+			gender: "f"
+		}
+	];
 </script>
 
 <section class="bg-white dark:bg-gray-900">
@@ -11,58 +26,36 @@
 				<TableBodyRow>
 					<TableBodyCell class="italic">Anschrift:</TableBodyCell>
 					<TableBodyCell>
-						KLJB Kläham-Oberergoldsbach e.V.
-						<br />
-						Raiffeisenstraße 6
-						<br />
-						84061 Ergoldsbach
+						{@html clubContact.address}
 					</TableBodyCell>
 				</TableBodyRow>
 				<TableBodyRow>
 					<TableBodyCell class="italic">Mail:</TableBodyCell>
 					<TableBodyCell>
-						<A color="text-cyan-400" href="mailto:info@kljb-klaeham.de">info@kljb-klaeham.de</A>
+						<A color="text-cyan-400" href={`mailto:${clubContact.mail}`}>{clubContact.mail}</A>
 					</TableBodyCell>
 				</TableBodyRow>
 				<TableBodyRow>
 					<TableBodyCell class="italic">Mobil:</TableBodyCell>
-					<TableBodyCell>0170 811 81 96</TableBodyCell>
+					<TableBodyCell>{clubContact.cellPhone}</TableBodyCell>
 				</TableBodyRow>
 			</TableBody>
 		</Table>
 		<Heading tag="h3">Vertretungsberechtigte Personen:</Heading>
 		<Table divClass="max-w-md">
 			<TableBody>
-				<TableBodyRow>
-					<TableBodyCell class="italic">1. Vorsitzender</TableBodyCell>
-					<TableBodyCell>
-						Florian Sedlmeier
-						<br />
-						Hauptstraße 29
-						<br />
-						84098 Hohenthann
-					</TableBodyCell>
-				</TableBodyRow>
-				<TableBodyRow>
-					<TableBodyCell class="italic">2. Vorsitzender</TableBodyCell>
-					<TableBodyCell>
-						Kilian Prosch
-						<br />
-						Unkofen 34
-						<br />
-						84098 Hohenthann
-					</TableBodyCell>
-				</TableBodyRow>
-				<TableBodyRow>
-					<TableBodyCell class="italic">3. Vorsitzende</TableBodyCell>
-					<TableBodyCell>
-						Lea Eichmeier
-						<br />
-						Ludwig-Stiegler-Straße 1
-						<br />
-						84061 Ergoldsbach
-					</TableBodyCell>
-				</TableBodyRow>
+				{#each personContacts as person, i}
+					<TableBodyRow>
+						<TableBodyCell class="italic">
+							{`${i + 1}. ${person.gender == "m" ? "Vorsitzender" : "Vorsitzende"}`}
+						</TableBodyCell>
+						<TableBodyCell>
+							{person.name}
+							<br />
+							{@html person.address}
+						</TableBodyCell>
+					</TableBodyRow>
+				{/each}
 			</TableBody>
 		</Table>
 		<Heading tag="h3">Vereinsregister:</Heading>
@@ -94,7 +87,7 @@
 		</P>
 
 		<Heading tag="h3" class="mb-4">Haftung für Links</Heading>
-		<P class="mb-4">
+		<P class="mb-3">
 			Unser Angebot enthält Links zu externen Websites Dritter, auf deren Inhalte wir keinen
 			Einfluss haben. Deshalb können wir für diese fremden Inhalte auch keine Gewähr übernehmen. Für
 			die Inhalte der verlinkten Seiten ist stets der jeweilige Anbieter oder Betreiber der Seiten
